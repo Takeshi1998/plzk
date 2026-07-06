@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PLZK.GG — サービスモックアップ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Chakra+Petch:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#10151B;--bg-deep:#0B0F14;--panel:#161D25;--panel-2:#1B242E;
+  --line:#26313D;--line-bright:#3A4856;
+  --text:#E9EDF1;--muted:#8E9BA8;
+  --orange:#FF7A1C;--orange-dim:#B4560F;
+  --hud:#8FC6E8;--ok:#5FBF7A;--ng:#E express05656;--ng:#E05656;
+  --font-body:"Zen Kaku Gothic New",sans-serif;
+  --font-data:"Chakra Petch",monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:var(--font-body);font-size:14px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:repeating-linear-gradient(0deg,transparent 0 3px,rgba(255,255,255,.012) 3px 4px);
+}
+.data{font-family:var(--font-data)}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+
+/* ===== アプリヘッダー ===== */
+.app-head{
+  position:sticky;top:0;z-index:40;
+  background:rgba(11,15,20,.9);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.app-head .in{
+  max-width:1120px;margin:0 auto;padding:0 20px;
+  display:flex;align-items:center;gap:28px;height:56px;
+}
+.logo{font-family:var(--font-data);font-weight:700;font-size:16px;letter-spacing:.14em}
+.logo em{color:var(--orange);font-style:normal}
+.season{
+  font-family:var(--font-data);font-size:10.5px;letter-spacing:.18em;color:var(--hud);
+  border:1px solid #2E4756;padding:3px 10px;
+}
+.tabs{display:flex;gap:4px;margin-left:auto}
+.tab{
+  background:none;border:none;color:var(--muted);
+  font-size:13px;font-weight:700;letter-spacing:.04em;
+  padding:8px 16px;position:relative;
+}
+.tab.on{color:var(--text)}
+.tab.on::after{
+  content:"";position:absolute;left:14px;right:14px;bottom:-1px;height:2px;background:var(--orange);
+}
+.me{
+  display:flex;align-items:center;gap:10px;
+  border:1px solid var(--line);background:var(--panel);padding:5px 12px 5px 6px;
+}
+.me .av{width:26px;height:26px;background:linear-gradient(135deg,var(--orange),var(--orange-dim));
+  clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)}
+.me .nm{font-family:var(--font-data);font-weight:600;font-size:12.5px}
+.me .rt{font-family:var(--font-data);font-weight:700;font-size:13px;color:var(--orange)}
+@media(max-width:760px){.season,.me .nm{display:none}.app-head .in{gap:14px}}
+
+.stage{max-width:1120px;margin:0 auto;padding:32px 20px 80px;position:relative;z-index:1}
+.screen{display:none}
+.screen.on{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+.page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:22px;flex-wrap:wrap}
+.page-head h1{font-size:22px;font-weight:900;letter-spacing:.02em}
+.page-head h1 small{
+  display:block;font-family:var(--font-data);font-weight:500;font-size:10.5px;
+  color:var(--muted);letter-spacing:.22em;margin-bottom:4px;
+}
+.btn-p{
+  font-family:var(--font-data);font-weight:700;font-size:13px;letter-spacing:.06em;
+  color:#0B0F14;background:var(--orange);border:none;padding:11px 22px;
+  clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px);
+}
+.btn-p:hover{filter:brightness(1.08)}
+
+/* ===== フィルタ ===== */
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.chip{
+  background:var(--panel);border:1px solid var(--line);color:var(--muted);
+  font-size:12px;font-weight:500;padding:6px 14px;border-radius:2px;
+}
+.chip.on{color:var(--orange);border-color:var(--orange-dim);background:rgba(255,122,28,.07)}
+.chip.b.on{color:var(--hud);border-color:#2E4756;background:rgba(143,198,232,.07)}
+
+/* ===== サイトマーカー小 ===== */
+.mk{width:30px;height:30px;flex:none;position:relative;display:flex;align-items:center;justify-content:center}
+.mk i{position:absolute;inset:4px;transform:rotate(45deg);border:1.5px solid var(--orange);background:rgba(255,122,28,.08)}
+.mk span{position:relative;font-family:var(--font-data);font-weight:700;font-size:12px;color:var(--orange)}
+.mk.b i{border-color:var(--hud);background:rgba(143,198,232,.07)}
+.mk.b span{color:var(--hud)}
+
+/* ===== 募集カード ===== */
+.cols{display:grid;grid-template-columns:1.5fr 1fr;gap:24px;align-items:start}
+@media(max-width:900px){.cols{grid-template-columns:1fr}}
+.panel{background:var(--panel);border:1px solid var(--line)}
+.panel .p-bar{
+  display:flex;align-items:center;gap:10px;padding:11px 16px;
+  border-bottom:1px solid var(--line);background:var(--bg-deep);
+}
+.panel .p-bar .t{font-family:var(--font-data);font-size:10.5px;letter-spacing:.2em;color:var(--muted)}
+.panel .p-bar .ct{margin-left:auto;font-family:var(--font-data);font-size:10.5px;color:var(--hud)}
+.lfg{padding:8px}
+.lfg-card{
+  display:flex;align-items:center;gap:14px;padding:14px;
+  border:1px solid transparent;border-bottom:1px solid var(--line);
+}
+.lfg-card:last-child{border-bottom-color:transparent}
+.lfg-card:hover{border-color:var(--line-bright);background:var(--panel-2)}
+.lfg-card .who{min-width:0;flex:1}
+.lfg-card .nm{font-family:var(--font-data);font-weight:600;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lfg-card .nm .tag{color:var(--muted);font-weight:500}
+.lfg-card .meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:5px}
+.pill{
+  font-size:10.5px;color:var(--muted);border:1px solid var(--line);
+  padding:1.5px 8px;letter-spacing:.04em;white-space:nowrap;
+}
+.pill.o{color:var(--orange);border-color:var(--orange-dim)}
+.pill.g{color:var(--ok);border-color:#2E4A38}
+.lfg-card .rt{text-align:right;flex:none}
+.lfg-card .rt .num{font-family:var(--font-data);font-weight:700;font-size:18px;color:var(--orange)}
+.lfg-card .rt .lb{font-size:9px;color:var(--muted);letter-spacing:.16em}
+.lfg-card .go{
+  flex:none;font-family:var(--font-data);font-size:11px;font-weight:700;letter-spacing:.08em;
+  color:var(--hud);background:none;border:1px solid #2E4756;padding:8px 16px;
+}
+.lfg-card .go:hover{color:#0B0F14;background:var(--hud)}
+@media(max-width:560px){.lfg-card .rt{display:none}}
+
+/* ===== 混合イベント ===== */
+.evt{padding:16px;border-bottom:1px solid var(--line)}
+.evt:last-child{border-bottom:none}
+.evt .e-top{display:flex;align-items:center;gap:12px}
+.evt .dt{font-family:var(--font-data);font-weight:700;font-size:15px}
+.evt .dt small{display:block;font-size:9.5px;color:var(--muted);font-weight:500;letter-spacing:.16em}
+.evt .host{margin-left:auto;font-size:11px;color:var(--muted)}
+.slots{display:flex;gap:5px;margin-top:12px}
+.slots i{flex:1;height:8px;background:var(--line)}
+.slots i.f{background:var(--hud)}
+.evt .e-bot{display:flex;align-items:center;justify-content:space-between;margin-top:8px}
+.evt .cnt{font-family:var(--font-data);font-size:11.5px;color:var(--hud)}
+.evt .join{
+  font-family:var(--font-data);font-size:11px;font-weight:700;
+  color:#0B0F14;background:var(--hud);border:none;padding:7px 16px;
+}
+.evt.full .join{background:var(--line);color:var(--muted)}
+.evt.live .dt{color:var(--orange)}
+.evt.live .cnt{color:var(--orange)}
+.evt.live .slots i.f{background:var(--orange)}
+.live-dot{width:7px;height:7px;border-radius:50%;background:var(--orange);animation:blink 1.2s infinite}
+@keyframes blink{50%{opacity:.25}}
+
+/* ===== プロフィール ===== */
+.prof-grid{display:grid;grid-template-columns:340px 1fr;gap:24px;align-items:start}
+@media(max-width:900px){.prof-grid{grid-template-columns:1fr}}
+.prof-card{padding:24px}
+.prof-card .top{display:flex;align-items:center;gap:16px}
+.prof-card .av{width:62px;height:62px;background:linear-gradient(135deg,var(--orange),var(--orange-dim));
+  clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)}
+.prof-card h2{font-family:var(--font-data);font-size:19px;font-weight:700}
+.prof-card h2 .num{color:var(--orange);font-size:14px}
+.prof-card .psn{font-size:11.5px;color:var(--muted)}
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.badge{
+  display:flex;align-items:center;gap:6px;
+  font-size:10.5px;letter-spacing:.06em;padding:4px 10px;
+  border:1px solid var(--orange-dim);color:var(--orange);background:rgba(255,122,28,.06);
+}
+.badge.b{border-color:#2E4756;color:var(--hud);background:rgba(143,198,232,.05)}
+.rate-hero{margin-top:22px;padding-top:20px;border-top:1px solid var(--line);display:flex;align-items:baseline;gap:14px}
+.rate-hero .big{font-family:var(--font-data);font-weight:700;font-size:46px;color:var(--orange);line-height:1}
+.rate-hero .dif{font-family:var(--font-data);font-size:13px;color:var(--ok)}
+.rate-hero .lb{font-size:10px;color:var(--muted);letter-spacing:.2em;margin-left:auto}
+.mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:18px}
+.ms{border:1px solid var(--line);background:var(--bg);padding:10px;text-align:center}
+.ms .v{font-family:var(--font-data);font-weight:700;font-size:16px}
+.ms .k{font-size:9px;color:var(--muted);letter-spacing:.14em;margin-top:2px}
+.trust{margin-top:18px;padding-top:16px;border-top:1px dashed var(--line);
+  display:flex;justify-content:space-between;font-size:11.5px;color:var(--muted)}
+.trust b{color:var(--ok);font-family:var(--font-data)}
+
+.chart-box{padding:20px}
+.chart-box .c-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.chart-box .c-head .t{font-size:13px;font-weight:700}
+.chart-box .c-head .r{font-family:var(--font-data);font-size:10.5px;color:var(--muted)}
+svg.chart{width:100%;height:auto;display:block}
+
+.hist .row{
+  display:grid;grid-template-columns:52px 1fr auto auto;gap:14px;align-items:center;
+  padding:12px 16px;border-bottom:1px solid var(--line);font-size:12.5px;
+}
+.hist .row:last-child{border-bottom:none}
+.hist .res{font-family:var(--font-data);font-weight:700;font-size:13px;letter-spacing:.1em}
+.hist .res.w{color:var(--ok)}
+.hist .res.l{color:var(--ng)}
+.hist .op .vs{color:var(--muted);font-size:11px}
+.hist .op .nm{font-family:var(--font-data);font-size:12.5px}
+.hist .mp{color:var(--muted);font-size:11px;text-align:right}
+.hist .dlt{font-family:var(--font-data);font-weight:700;font-size:13px;text-align:right;min-width:44px}
+.hist .dlt.up{color:var(--ok)}
+.hist .dlt.dn{color:var(--ng)}
+@media(max-width:560px){.hist .mp{display:none}.hist .row{grid-template-columns:44px 1fr auto}}
+
+/* ===== ランキング ===== */
+.rank-table .row{
+  display:grid;grid-template-columns:56px 1fr 100px 90px 70px;gap:12px;align-items:center;
+  padding:13px 18px;border-bottom:1px solid var(--line);
+}
+.rank-table .row:last-child{border-bottom:none}
+.rank-table .row.head{
+  font-size:9.5px;letter-spacing:.18em;color:var(--muted);
+  background:var(--bg-deep);padding:9px 18px;font-family:var(--font-data);
+}
+.rank-table .pos{font-family:var(--font-data);font-weight:700;font-size:15px;color:var(--muted)}
+.rank-table .row:nth-child(2) .pos{color:var(--orange);font-size:18px}
+.rank-table .row:nth-child(3) .pos,.rank-table .row:nth-child(4) .pos{color:var(--hud)}
+.rank-table .pl{display:flex;align-items:center;gap:10px;min-width:0}
+.rank-table .pl .av{width:26px;height:26px;flex:none;background:linear-gradient(135deg,#41546A,#26313D);
+  clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)}
+.rank-table .row:nth-child(2) .pl .av{background:linear-gradient(135deg,var(--orange),var(--orange-dim))}
+.rank-table .pl .nm{font-family:var(--font-data);font-weight:600;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rank-table .rr{font-family:var(--font-data);font-weight:700;font-size:15px;color:var(--orange);text-align:right}
+.rank-table .wl{font-family:var(--font-data);font-size:12px;color:var(--muted);text-align:right}
+.rank-table .wr{font-family:var(--font-data);font-size:12px;text-align:right}
+@media(max-width:640px){
+  .rank-table .row{grid-template-columns:44px 1fr 80px}
+  .rank-table .wl,.rank-table .wr{display:none}
+}
+.foot-note{
+  margin-top:28px;text-align:center;font-family:var(--font-data);
+  font-size:10.5px;letter-spacing:.18em;color:var(--muted);
+}
+</style>
+</head>
+<body>
+
+<header class="app-head">
+  <div class="in">
+    <span class="logo">PLZK<em>.GG</em></span>
+    <span class="season data">SEASON 1 — DAY 12</span>
+    <nav class="tabs">
+      <button class="tab on" data-s="finder">Match Finder</button>
+      <button class="tab" data-s="profile">プロフィール</button>
+      <button class="tab" data-s="ranking">ランキング</button>
+    </nav>
+    <div class="me">
+      <span class="av"></span>
+      <span class="nm">R_246</span>
+      <span class="rt">1624</span>
+    </div>
+  </div>
+</header>
+
+<main class="stage">
+
+<!-- ============ SCREEN: MATCH FINDER ============ -->
+<section class="screen on" id="s-finder">
+  <div class="page-head">
+    <h1><small>FIND MATCH</small>対戦を探す</h1>
+    <button class="btn-p">+ 募集を投稿</button>
+  </div>
+
+  <div class="cols">
+    <!-- SR2on2 募集一覧 -->
+    <div class="panel">
+      <div class="p-bar">
+        <span class="mk"><i></i><span>A</span></span>
+        <span class="t">SR2on2 — 対戦相手募集</span>
+        <span class="ct data">8件 募集中</span>
+      </div>
+      <div class="lfg">
+        <div class="lfg-card">
+          <div class="who">
+            <div class="nm">xxSTANDOFFxx <span class="tag">&</span> R_hijiki</div>
+            <div class="meta">
+              <span class="pill o">今夜 22:00〜</span><span class="pill">BO2</span>
+              <span class="pill g">ホスト可</span><span class="pill">BO3形式</span>
+            </div>
+          </div>
+          <div class="rt"><div class="num">1671</div><div class="lb">AVG RATE</div></div>
+          <button class="go">応募する</button>
+        </div>
+        <div class="lfg-card">
+          <div class="who">
+            <div class="nm">semtex_kobe <span class="tag">&</span> 相方募集中</div>
+            <div class="meta">
+              <span class="pill o">21:30〜</span><span class="pill">BO2</span>
+              <span class="pill">ホスト不可</span><span class="pill">ソロ可</span>
+            </div>
+          </div>
+          <div class="rt"><div class="num">1502</div><div class="lb">RATE</div></div>
+          <button class="go">応募する</button>
+        </div>
+        <div class="lfg-card">
+          <div class="who">
+            <div class="nm">ghost_2012 <span class="tag">&</span> aim_assist_believer</div>
+            <div class="meta">
+              <span class="pill o">23:00〜</span><span class="pill">BO2</span>
+              <span class="pill g">ホスト可</span>
+            </div>
+          </div>
+          <div class="rt"><div class="num">1548</div><div class="lb">AVG RATE</div></div>
+          <button class="go">応募する</button>
+        </div>
+        <div class="lfg-card">
+          <div class="who">
+            <div class="nm">plzk_oldman <span class="tag">&</span> nuketown_camper</div>
+            <div class="meta">
+              <span class="pill o">週末 14:00〜</span><span class="pill">BO1</span>
+              <span class="pill">どちらでも</span><span class="pill">復帰勢歓迎</span>
+            </div>
+          </div>
+          <div class="rt"><div class="num">1433</div><div class="lb">AVG RATE</div></div>
+          <button class="go">応募する</button>
+        </div>
+        <div class="lfg-card">
+          <div class="who">
+            <div class="nm">Raid_no_hashi <span class="tag">&</span> C4_dake_no_otoko</div>
+            <div class="meta">
+              <span class="pill o">今夜 24:00〜</span><span class="pill">BO2</span>
+              <span class="pill g">ホスト可</span><span class="pill">上位勢求む</span>
+            </div>
+          </div>
+          <div class="rt"><div class="num">1712</div><div class="lb">AVG RATE</div></div>
+          <button class="go">応募する</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 混合イベント -->
+    <div class="panel">
+      <div class="p-bar">
+        <span class="mk b"><i></i><span>B</span></span>
+        <span class="t">5v5サーチ</span>
+      </div>
+      <div class="evt">
+        <div class="e-top">
+          <div class="dt data"><small>本日</small>22:30</div>
+          <span class="host">主催: semtex_kobe</span>
+        </div>
+        <div class="slots"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i></i><i></i><i></i></div>
+        <div class="e-bot">
+          <span class="cnt data">7 / 10 — あと3枠</span>
+          <button class="join">参加する</button>
+        </div>
+      </div>
+      <div class="evt">
+        <div class="e-top">
+          <div class="dt data"><small>明日</small>7/11 21:00</div>
+          <span class="host">主催: plzk_oldman</span>
+        </div>
+        <div class="slots"><i class="f"></i><i class="f"></i><i class="f"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="e-bot">
+          <span class="cnt data">3 / 10 — 募集中</span>
+          <button class="join">参加する</button>
+        </div>
+      </div>
+      <div class="evt full">
+        <div class="e-top">
+          <div class="dt data"><small>明日</small>7/11 23:00</div>
+          <span class="host">主催: Raid_no_hashi</span>
+        </div>
+        <div class="slots"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i></div>
+        <div class="e-bot">
+          <span class="cnt data">10 / 10 — 満員</span>
+          <button class="join">キャンセル待ち</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="foot-note data">MOCKUP — 画面・数値はすべて開発中のイメージです</p>
+</section>
+
+<!-- ============ SCREEN: PROFILE ============ -->
+<section class="screen" id="s-profile">
+  <div class="page-head">
+    <h1><small>PLAYER</small>プロフィール</h1>
+  </div>
+
+  <div class="prof-grid">
+    <!-- 左:プレイヤーカード -->
+    <div class="panel prof-card">
+      <div class="top">
+        <span class="av"></span>
+        <div>
+          <h2>R_246 <span class="num">#012</span></h2>
+          <div class="psn">PSN: R_246_jp</div>
+        </div>
+      </div>
+      <div class="rate-hero">
+        <span class="big data">1624</span>
+        <span class="dif data">▲ +28 今週</span>
+        <span class="lb">SR2on2 RATE</span>
+      </div>
+      <div class="mini-stats">
+        <div class="ms"><div class="v data">31–12</div><div class="k">W–L</div></div>
+        <div class="ms"><div class="v data">72%</div><div class="k">WIN RATE</div></div>
+        <div class="ms"><div class="v data" style="color:var(--orange)">W5</div><div class="k">連勝中</div></div>
+      </div>
+      <div class="trust">
+        <span>結果承認率 <b>100%</b></span>
+        <span>No Show <b>0</b></span>
+        <span>異議 <b>0</b></span>
+      </div>
+    </div>
+
+    <!-- 右:レート推移 + 対戦履歴 -->
+    <div style="display:grid;gap:24px">
+      <div class="panel chart-box">
+        <div class="c-head">
+          <span class="t">レート推移</span>
+          <span class="r data">SEASON 1 / 43 MATCHES</span>
+        </div>
+        <svg class="chart" viewBox="0 0 640 180" aria-label="レート推移グラフ">
+          <line x1="0" y1="45"  x2="640" y2="45"  stroke="#26313D" stroke-width="1" stroke-dasharray="3 5"/>
+          <line x1="0" y1="90"  x2="640" y2="90"  stroke="#26313D" stroke-width="1" stroke-dasharray="3 5"/>
+          <line x1="0" y1="135" x2="640" y2="135" stroke="#26313D" stroke-width="1" stroke-dasharray="3 5"/>
+          <text x="6" y="40"  fill="#8E9BA8" font-size="9" font-family="Chakra Petch">1650</text>
+          <text x="6" y="85"  fill="#8E9BA8" font-size="9" font-family="Chakra Petch">1550</text>
+          <text x="6" y="130" fill="#8E9BA8" font-size="9" font-family="Chakra Petch">1450</text>
+          <polyline fill="none" stroke="#FF7A1C" stroke-width="2.5" stroke-linejoin="round"
+            points="40,140 90,128 140,136 190,112 240,118 290,96 340,102 390,84 440,90 490,68 540,74 600,52"/>
+          <polygon fill="rgba(255,122,28,.08)" stroke="none"
+            points="40,140 90,128 140,136 190,112 240,118 290,96 340,102 390,84 440,90 490,68 540,74 600,52 600,180 40,180"/>
+          <circle cx="600" cy="52" r="4" fill="#FF7A1C"/>
+          <text x="588" y="38" fill="#FF7A1C" font-size="11" font-weight="700" font-family="Chakra Petch">1624</text>
+        </svg>
+      </div>
+
+      <div class="panel hist">
+        <div class="p-bar"><span class="t">マッチ戦績</span><span class="ct data">直近5件</span></div>
+        <div class="row">
+          <span class="res w">WIN</span>
+          <div class="op"><span class="vs">vs</span> <span class="nm">xxSTANDOFFxx & R_hijiki</span></div>
+          <span class="mp">BO2 / RAID → SLUMS</span>
+          <span class="dlt up">+14</span>
+        </div>
+        <div class="row">
+          <span class="res w">WIN</span>
+          <div class="op"><span class="vs">vs</span> <span class="nm">ghost_2012 & aim_assist_believer</span></div>
+          <span class="mp">BO2 / STANDOFF</span>
+          <span class="dlt up">+11</span>
+        </div>
+        <div class="row">
+          <span class="res l">LOSE</span>
+          <div class="op"><span class="vs">vs</span> <span class="nm">Raid_no_hashi & C4_dake_no_otoko</span></div>
+          <span class="mp">BO2 / EXPRESS → RAID</span>
+          <span class="dlt dn">−9</span>
+        </div>
+        <div class="row">
+          <span class="res w">WIN</span>
+          <div class="op"><span class="vs">vs</span> <span class="nm">semtex_kobe & yoruo_sniper</span></div>
+          <span class="mp">BO2 / SLUMS</span>
+          <span class="dlt up">+13</span>
+        </div>
+        <div class="row">
+          <span class="res w">WIN</span>
+          <div class="op"><span class="vs">vs</span> <span class="nm">plzk_oldman & nuketown_camper</span></div>
+          <span class="mp">BO1 / SUMMIT</span>
+          <span class="dlt up">+8</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="foot-note data">MOCKUP — 画面・数値はすべて開発中のイメージです</p>
+</section>
+
+<!-- ============ SCREEN: RANKING ============ -->
+<section class="screen" id="s-ranking">
+  <div class="page-head">
+    <h1><small>LEADERBOARD</small>Season 1 ランキング</h1>
+    <div class="filters" style="margin:0">
+      <span class="chip on">SR2on2</span>
+      <span class="chip b">5v5 混合</span>
+    </div>
+  </div>
+
+  <div class="panel rank-table">
+    <div class="row head">
+      <span>RANK</span><span>PLAYER</span><span style="text-align:right">RATE</span>
+      <span style="text-align:right">W–L</span><span style="text-align:right">WIN%</span>
+    </div>
+    <div class="row">
+      <span class="pos data">1</span>
+      <div class="pl"><span class="av"></span><span class="nm">Raid_no_hashi</span></div>
+      <span class="rr">1748</span><span class="wl">52–15</span><span class="wr" style="color:var(--ok)">78%</span>
+    </div>
+    <div class="row">
+      <span class="pos data">2</span>
+      <div class="pl"><span class="av"></span><span class="nm">xxSTANDOFFxx</span></div>
+      <span class="rr">1701</span><span class="wl">44–17</span><span class="wr" style="color:var(--ok)">72%</span>
+    </div>
+    <div class="row">
+      <span class="pos data">3</span>
+      <div class="pl"><span class="av"></span><span class="nm">C4_dake_no_otoko</span></div>
+      <span class="rr">1688</span><span class="wl">40–18</span><span class="wr" style="color:var(--ok)">69%</span>
+    </div>
+    <div class="row">
+      <span class="pos data">4</span>
+      <div class="pl"><span class="av"></span><span class="nm">R_hijiki</span></div>
+      <span class="rr">1655</span><span class="wl">38–20</span><span class="wr">66%</span>
+    </div>
+    <div class="row" style="background:rgba(255,122,28,.05);border-left:2px solid var(--orange)">
+      <span class="pos data" style="color:var(--orange)">5</span>
+      <div class="pl"><span class="av" style="background:linear-gradient(135deg,var(--orange),var(--orange-dim))"></span><span class="nm">R_246 <span style="color:var(--orange);font-size:10px">YOU</span></span></div>
+      <span class="rr">1624</span><span class="wl">31–12</span><span class="wr" style="color:var(--ok)">72%</span>
+    </div>
+    <div class="row">
+      <span class="pos data">6</span>
+      <div class="pl"><span class="av"></span><span class="nm">ghost_2012</span></div>
+      <span class="rr">1597</span><span class="wl">29–19</span><span class="wr">60%</span>
+    </div>
+    <div class="row">
+      <span class="pos data">7</span>
+      <div class="pl"><span class="av"></span><span class="nm">yoruo_sniper</span></div>
+      <span class="rr">1571</span><span class="wl">25–18</span><span class="wr">58%</span>
+    </div>
+    <div class="row">
+      <span class="pos data">8</span>
+      <div class="pl"><span class="av"></span><span class="nm">semtex_kobe</span></div>
+      <span class="rr">1544</span><span class="wl">22–17</span><span class="wr">56%</span>
+    </div>
+  </div>
+  <p class="foot-note data">MOCKUP — 画面・数値はすべて開発中のイメージです</p>
+</section>
+
+</main>
+
+<script>
+document.querySelectorAll(".tab").forEach(function(t){
+  t.addEventListener("click",function(){
+    document.querySelectorAll(".tab").forEach(function(x){x.classList.remove("on")});
+    document.querySelectorAll(".screen").forEach(function(x){x.classList.remove("on")});
+    t.classList.add("on");
+    document.getElementById("s-"+t.dataset.s).classList.add("on");
+  });
+});
+</script>
+</body>
+</html>

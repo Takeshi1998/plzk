@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <pattern id="scan" width="4" height="4" patternUnits="userSpaceOnUse">
+      <rect width="4" height="3" fill="transparent"/>
+      <rect y="3" width="4" height="1" fill="#ffffff" opacity=".018"/>
+    </pattern>
+    <pattern id="grid" width="56" height="56" patternUnits="userSpaceOnUse">
+      <path d="M 56 0 L 0 0 0 56" fill="none" stroke="#8FC6E8" stroke-width="1" opacity=".055"/>
+    </pattern>
+    <linearGradient id="edge" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FF7A1C" stop-opacity=".28"/>
+      <stop offset=".52" stop-color="#8FC6E8" stop-opacity=".08"/>
+      <stop offset="1" stop-color="#0B0F14" stop-opacity="0"/>
+    </linearGradient>
+    <clipPath id="shotClip">
+      <path d="M520 118 H1158 V532 H494 V144 Z"/>
+    </clipPath>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="20" stdDeviation="24" flood-color="#000000" flood-opacity=".42"/>
+    </filter>
+    <style>
+      .jp{font-family:"Hiragino Sans","Yu Gothic","Noto Sans JP",sans-serif}
+      .data{font-family:Menlo,Monaco,Consolas,monospace}
+      .muted{fill:#8E9BA8}
+      .text{fill:#E9EDF1}
+      .orange{fill:#FF7A1C}
+      .hud{fill:#8FC6E8}
+    </style>
+  </defs>
+
+  <rect width="1200" height="630" fill="#10151B"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <rect width="1200" height="630" fill="url(#scan)"/>
+  <path d="M0 0 H1200 V630 H0 Z" fill="url(#edge)"/>
+  <path d="M0 546 H1200 V630 H0 Z" fill="#0B0F14" opacity=".42"/>
+
+  <g opacity=".82">
+    <path d="M72 72 H164" stroke="#3A4856" stroke-width="2"/>
+    <path d="M72 72 V164" stroke="#3A4856" stroke-width="2"/>
+    <path d="M1128 558 H1036" stroke="#3A4856" stroke-width="2"/>
+    <path d="M1128 558 V466" stroke="#3A4856" stroke-width="2"/>
+  </g>
+
+  <g transform="translate(72 68)">
+    <text class="data text" x="0" y="0" font-size="30" font-weight="800" letter-spacing="4">PLZK<tspan class="orange">.GG</tspan></text>
+    <rect x="0" y="36" width="228" height="30" fill="#0B0F14" stroke="#2E4756"/>
+    <text class="data hud" x="18" y="56" font-size="12" letter-spacing="3">RANKED MATCH FINDER</text>
+  </g>
+
+  <g transform="translate(72 210)">
+    <text class="jp text" x="0" y="0" font-size="82" font-weight="900" letter-spacing="0">plzk、</text>
+    <text class="jp orange" x="0" y="94" font-size="96" font-weight="900" letter-spacing="0">再稼働。</text>
+    <rect x="8" y="106" width="356" height="8" fill="#FF7A1C" opacity=".26"/>
+    <text class="jp text" x="0" y="168" font-size="28" font-weight="700">戦績が残るplzk。</text>
+    <text class="jp muted" x="0" y="213" font-size="22" font-weight="500">SR2on2 / 5v5サーチを、</text>
+    <text class="jp muted" x="0" y="250" font-size="22" font-weight="500">レートとランキングで回す。</text>
+  </g>
+
+  <g transform="translate(72 500)">
+    <g>
+      <rect x="0" y="0" width="42" height="42" transform="rotate(45 21 21)" fill="#FF7A1C" opacity=".08" stroke="#FF7A1C" stroke-width="2"/>
+      <text class="data orange" x="16" y="27" font-size="17" font-weight="800">A</text>
+      <text class="data muted" x="56" y="16" font-size="12" letter-spacing="2">SITE A</text>
+    <text class="jp text" x="56" y="42" font-size="20" font-weight="800">SR2on2</text>
+    </g>
+    <g transform="translate(210 0)">
+      <rect x="0" y="0" width="42" height="42" transform="rotate(45 21 21)" fill="#8FC6E8" opacity=".07" stroke="#8FC6E8" stroke-width="2"/>
+      <text class="data hud" x="16" y="27" font-size="17" font-weight="800">B</text>
+      <text class="data muted" x="56" y="16" font-size="12" letter-spacing="2">SITE B</text>
+      <text class="jp text" x="56" y="42" font-size="18" font-weight="800">5v5 SEARCH</text>
+    </g>
+  </g>
+
+  <g filter="url(#shadow)">
+    <path d="M510 104 H1166 V548 H484 V130 Z" fill="#161D25" stroke="#26313D" stroke-width="2"/>
+    <path d="M510 104 H1166 V548 H484 V130 Z" fill="none" stroke="#3A4856" stroke-width="1"/>
+    <image href="taisen-view.png" x="494" y="122" width="742" height="439" preserveAspectRatio="xMidYMid slice" clip-path="url(#shotClip)"/>
+    <rect x="494" y="144" width="664" height="388" fill="none" stroke="#3A4856" opacity=".8"/>
+  </g>
+
+  <g transform="translate(518 74)">
+    <rect x="0" y="0" width="184" height="32" fill="#0B0F14" stroke="#B4560F"/>
+    <text class="data orange" x="16" y="21" font-size="12" font-weight="700" letter-spacing="2">LIVE MOCKUP</text>
+  </g>
+
+  <text class="data muted" x="72" y="596" font-size="12" letter-spacing="2">UNOFFICIAL FAN COMMUNITY</text>
+  <text class="jp muted" x="1128" y="596" font-size="12" text-anchor="end">Activision非提携</text>
+</svg>
