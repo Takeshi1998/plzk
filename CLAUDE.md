@@ -142,7 +142,6 @@ font: Zen Kaku Gothic New（本文） / Chakra Petch（数値・データ）
 - LP `<script>` 冒頭の `MEMBER_COUNT`（現在のDiscord人数を手動更新）
 - OGP: `og:image` は絶対URL・1200×630。twitter:card は summary_large_image
   - 中身は「ロゴ+コピー+Match Finderスクショ切り抜き」の合成を想定
-- LPの混合説明文を5v5チーム制の世界観に整合（現状「一人でも潜れる」の記述が残っている可能性）
 
 ## 10. デプロイ
 

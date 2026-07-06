@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PLZK.GG — plzk、再稼働。BO1/BO2のランク付き対戦コミュニティ</title>
-<meta name="description" content="BO1/BO2がPS5・PS4に帰ってくる。SR2on2と5v5サーチ(混合)を、レートと戦績が残る場所で回す。非公式ファンコミュニティ PLZK.GG">
+<meta name="description" content="BO1/BO2がPS5・PS4に帰ってくる。SR2on2と5v5サーチを、レートと戦績が残る場所で回す。非公式ファンコミュニティ PLZK.GG">
 <!-- OGP: X/Discord共有時の見え方 -->
 <meta property="og:title" content="plzk、再稼働。">
 <meta property="og:description" content="BO1/BO2、PS5に帰ってくる。SR2on2も5v5サーチも、ランクで回す。">
@@ -149,14 +149,47 @@ header nav a.hd-cta{
 @media(max-width:640px){header nav a:not(.hd-cta){display:none}}
 
 /* ===== HERO ===== */
-.hero{padding:120px 0 100px;border-top:none;position:relative}
+.hero{
+  min-height:min(660px,calc(100svh - 120px));
+  padding:96px 0 68px;border-top:none;position:relative;
+  overflow:hidden;display:flex;align-items:center;
+}
+.hero::after{
+  content:"";position:absolute;inset:0;pointer-events:none;z-index:1;
+  background:
+    linear-gradient(90deg,var(--bg) 0%,rgba(16,21,27,.98) 28%,rgba(16,21,27,.72) 58%,rgba(16,21,27,.28) 100%),
+    linear-gradient(0deg,var(--bg) 0%,rgba(16,21,27,0) 34%);
+}
 .hero .grid-bg{
-  position:absolute;inset:0;pointer-events:none;
+  position:absolute;inset:0;pointer-events:none;z-index:0;
   background:
     linear-gradient(rgba(143,198,232,.035) 1px,transparent 1px),
     linear-gradient(90deg,rgba(143,198,232,.035) 1px,transparent 1px);
   background-size:56px 56px;
   mask-image:radial-gradient(ellipse 80% 70% at 50% 20%,#000 0%,transparent 70%);
+}
+.hero .wrap{z-index:2;width:100%}
+.hero-visual{
+  position:absolute;z-index:0;right:-92px;top:96px;
+  width:min(760px,58vw);pointer-events:none;
+  opacity:.72;filter:drop-shadow(0 28px 34px rgba(0,0,0,.42));
+  transform:perspective(900px) rotateY(-10deg) rotateZ(-1deg);
+  transform-origin:center right;
+}
+.hero-visual::before{
+  content:"";position:absolute;inset:-1px;
+  border:1px solid var(--line-bright);
+  background:linear-gradient(135deg,rgba(255,122,28,.08),rgba(143,198,232,.03));
+}
+.hero-visual::after{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(90deg,rgba(16,21,27,.1),rgba(16,21,27,0) 34%,rgba(16,21,27,.18)),
+    linear-gradient(0deg,rgba(16,21,27,.5),rgba(16,21,27,0) 32%);
+}
+.hero-visual img{
+  width:100%;display:block;position:relative;
+  border:1px solid var(--line);background:var(--panel);
 }
 .hero h1{
   font-weight:900;
@@ -180,6 +213,26 @@ header nav a.hd-cta{
 }
 .hero .fact strong{color:var(--hud);font-weight:600}
 .hero .cta-block{margin-top:44px}
+@media(max-width:760px){
+  .hero{
+    min-height:auto;display:block;padding:88px 0 0;
+  }
+  .hero::after{
+    background:
+      linear-gradient(180deg,var(--bg) 0%,rgba(16,21,27,.95) 46%,rgba(16,21,27,.38) 100%),
+      linear-gradient(0deg,var(--bg) 0%,rgba(16,21,27,0) 32%);
+  }
+  .hero .grid-bg{background-size:42px 42px}
+  .hero-visual{
+    position:relative;right:auto;top:auto;z-index:0;
+    width:calc(100% + 72px);height:230px;margin:34px 0 0 -36px;
+    opacity:.56;overflow:hidden;filter:drop-shadow(0 18px 22px rgba(0,0,0,.36));
+    transform:none;
+  }
+  .hero-visual img{width:560px;max-width:none;transform:translateX(-96px)}
+  .hero h1{font-size:clamp(56px,17vw,82px);margin-top:22px}
+  .hero .sub{font-size:16px;line-height:1.9;max-width:330px}
+}
 
 /* ===== 旗(決起文) ===== */
 .flag .body{
@@ -370,11 +423,14 @@ footer .links a:hover{color:var(--text)}
 <section class="hero" id="top">
   <div class="grid-bg"></div>
   <div class="wrap">
-    <h1>plzk、<br><span class="re">再始動</span>。</h1>
+    <h1>plzk、<br><span class="re">再稼働</span>。</h1>
     <p class="sub">
       2026年7月、BO1とBO2がPS5へ<br>
+      今度は<b>SR2on2</b>も<b>5v5サーチ</b>も、ここで回す。
     </p>
-    </p>
+  </div>
+  <div class="hero-visual" aria-hidden="true">
+    <img src="taisen-view.png?v=team-search" alt="">
   </div>
 </section>
 
@@ -383,7 +439,6 @@ footer .links a:hover{color:var(--text)}
   <div class="wrap rv">
     <p class="eyebrow">CONCEPT</p>
     <div class="sec-head"><h2>もう一度、あの界隈を盛り上げよう。</h2></div>
-    <div class="body">
     <div class="body">
       <p>
         Twitterの募集から混合に潜って、週末はクラン戦。<br>
@@ -428,14 +483,14 @@ footer .links a:hover{color:var(--text)}
           <div class="site-marker blue"><span class="diamond"></span><span>B</span></div>
           <div class="t">
             <span class="rank-tag">RANKED</span>
-            <h3>5v5 SEARCH<small>混合 / SOLO OK</small></h3>
+            <h3>5v5 SEARCH<small>TEAM SEARCH / 5v5</small></h3>
           </div>
         </div>
-        <p>一人でも潜れる10人サーチ。野良で入って、レートを持ち帰る。相方はここで見つかる。</p>
+        <p>組み上がった5人チームで、相手チームを探す。チーム平均レートで、クラン戦の熱量をそのまま残す。</p>
         <ul>
-          <li>ソロ参加OK。当時の「混合」をそのまま定期開催</li>
+          <li>Match Finderでチーム単位の募集・応募</li>
           <li>全試合がレートに反映、シーズンごとに確定</li>
-          <li>チーム分けから結果反映までサイトで完結</li>
+          <li>メンバー集めとロビー合流はDiscord/Xで完結</li>
         </ul>
       </div>
     </div>
@@ -444,7 +499,7 @@ footer .links a:hover{color:var(--text)}
     <!-- 実UIスクリーンショット2枚 -->
     <div class="mock-row">
       <div class="mock hud-panel rv"><span class="hud-c"></span>
-        <img src="taisen-view.png" alt="PLZK.GG Match Finder画面のスクリーンショット">
+        <img src="taisen-view.png?v=team-search" alt="PLZK.GG Match Finder画面のスクリーンショット">
       </div>
       <div class="mock hud-panel profile-mock rv"><span class="hud-c"></span>
         <img src="profile.png" alt="PLZK.GG プレイヤープロフィール画面のスクリーンショット">
@@ -484,7 +539,6 @@ footer .links a:hover{color:var(--text)}
 
 
 <!-- ================= FAQ ================= -->
-<!-- ================= FAQ ================= -->
 <section class="faq" id="faq">
   <div class="wrap">
     <div class="sec-head rv">
@@ -502,8 +556,7 @@ footer .links a:hover{color:var(--text)}
       </details>
       <details>
         <summary>当時やってなかった/ブランクがあるんですが</summary>
-        <div class="a">混合はソロ参加OK・レートも初期値から始まるので、腕は問いません。むしろ復帰勢・新規勢が入りやすい場を作るのが目的です。</div>
-      </details>
+        <div class="a">レートは初期値から始まるので、腕は問いません。ソロ復帰勢はDiscordの混合イベントや、SR2on2の相方募集から入りやすい場を作ります。</div>
       </details>
       <details>
         <summary>公式のサービスですか?</summary>
@@ -519,7 +572,6 @@ footer .links a:hover{color:var(--text)}
     <p class="legal">
       本サービスは、Activision Publishing, Inc.および関連会社とは一切関係のない、非公式のファンコミュニティです。<br>
       Call of Duty®はActivision Publishing, Inc.の商標です。本サイトはゲーム内画像・ロゴ等の著作物を使用していません。
-    </p>
     </p>
   </div>
 </footer>

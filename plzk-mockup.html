@@ -137,8 +137,10 @@ button{font-family:inherit;cursor:pointer}
 }
 .lfg-card .go:hover{color:#0B0F14;background:var(--hud)}
 @media(max-width:560px){.lfg-card .rt{display:none}}
+.team-list .lfg-card .rt .num{color:var(--hud)}
+.team-list .pill.b{color:var(--hud);border-color:#2E4756}
 
-/* ===== 混合イベント ===== */
+/* ===== 5v5チーム募集 ===== */
 .evt{padding:16px;border-bottom:1px solid var(--line)}
 .evt:last-child{border-bottom:none}
 .evt .e-top{display:flex;align-items:center;gap:12px}
@@ -338,43 +340,46 @@ svg.chart{width:100%;height:auto;display:block}
       </div>
     </div>
 
-    <!-- 混合イベント -->
+    <!-- 5v5 チーム募集 -->
     <div class="panel">
       <div class="p-bar">
         <span class="mk b"><i></i><span>B</span></span>
-        <span class="t">5v5サーチ</span>
+        <span class="t">5v5 SEARCH — チーム募集</span>
+        <span class="ct data">4件 募集中</span>
       </div>
-      <div class="evt">
-        <div class="e-top">
-          <div class="dt data"><small>本日</small>22:30</div>
-          <span class="host">主催: semtex_kobe</span>
+      <div class="lfg team-list">
+        <div class="lfg-card">
+          <div class="who">
+            <div class="nm">Team STANDOFF</div>
+            <div class="meta">
+              <span class="pill b">今夜 23:00〜</span><span class="pill">BO2</span>
+              <span class="pill g">ホスト可</span><span class="pill">5人登録済</span>
+            </div>
+          </div>
+          <div class="rt"><div class="num">1618</div><div class="lb">TEAM AVG</div></div>
+          <button class="go">応募する</button>
         </div>
-        <div class="slots"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i></i><i></i><i></i></div>
-        <div class="e-bot">
-          <span class="cnt data">7 / 10 — あと3枠</span>
-          <button class="join">参加する</button>
+        <div class="lfg-card">
+          <div class="who">
+            <div class="nm">Raid Old Boys</div>
+            <div class="meta">
+              <span class="pill b">明日 21:00〜</span><span class="pill">BO2</span>
+              <span class="pill">ホスト不可</span><span class="pill">CyAC準拠</span>
+            </div>
+          </div>
+          <div class="rt"><div class="num">1546</div><div class="lb">TEAM AVG</div></div>
+          <button class="go">応募する</button>
         </div>
-      </div>
-      <div class="evt">
-        <div class="e-top">
-          <div class="dt data"><small>明日</small>7/11 21:00</div>
-          <span class="host">主催: plzk_oldman</span>
-        </div>
-        <div class="slots"><i class="f"></i><i class="f"></i><i class="f"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-        <div class="e-bot">
-          <span class="cnt data">3 / 10 — 募集中</span>
-          <button class="join">参加する</button>
-        </div>
-      </div>
-      <div class="evt full">
-        <div class="e-top">
-          <div class="dt data"><small>明日</small>7/11 23:00</div>
-          <span class="host">主催: Raid_no_hashi</span>
-        </div>
-        <div class="slots"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i></div>
-        <div class="e-bot">
-          <span class="cnt data">10 / 10 — 満員</span>
-          <button class="join">キャンセル待ち</button>
+        <div class="lfg-card">
+          <div class="who">
+            <div class="nm">SLUMS Search Club</div>
+            <div class="meta">
+              <span class="pill b">週末 22:00〜</span><span class="pill">BO1</span>
+              <span class="pill g">ホスト可</span>
+            </div>
+          </div>
+          <div class="rt"><div class="num">1482</div><div class="lb">TEAM AVG</div></div>
+          <button class="go">応募する</button>
         </div>
       </div>
     </div>
