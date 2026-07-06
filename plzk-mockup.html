@@ -543,14 +543,19 @@ svg.chart{width:100%;height:auto;display:block}
 </main>
 
 <script>
+function showScreen(name){
+  var target = document.querySelector('.tab[data-s="'+name+'"]');
+  if(!target) return;
+  document.querySelectorAll(".tab").forEach(function(x){x.classList.remove("on")});
+  document.querySelectorAll(".screen").forEach(function(x){x.classList.remove("on")});
+  target.classList.add("on");
+  document.getElementById("s-"+target.dataset.s).classList.add("on");
+}
 document.querySelectorAll(".tab").forEach(function(t){
-  t.addEventListener("click",function(){
-    document.querySelectorAll(".tab").forEach(function(x){x.classList.remove("on")});
-    document.querySelectorAll(".screen").forEach(function(x){x.classList.remove("on")});
-    t.classList.add("on");
-    document.getElementById("s-"+t.dataset.s).classList.add("on");
-  });
+  t.addEventListener("click",function(){ showScreen(t.dataset.s); });
 });
+var initialScreen = new URLSearchParams(location.search).get("screen") || location.hash.replace("#","");
+if(initialScreen) showScreen(initialScreen);
 </script>
 </body>
 </html>
